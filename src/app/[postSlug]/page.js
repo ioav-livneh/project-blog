@@ -10,6 +10,8 @@ import { MDXRemote } from "next-mdx-remote/rsc";
 
 import { BLOG_TITLE } from "@/constants";
 import CodeSnippet from "@/components/CodeSnippet/CodeSnippet";
+import DivisionGroupsDemo from "@/components/DivisionGroupsDemo/DivisionGroupsDemo";
+import CircularColorsDemo from "@/components/CircularColorsDemo/CircularColorsDemo";
 
 export async function generateMetadata({ params }) {
   const { frontmatter } = await loadBlogPost(params.postSlug);
@@ -30,7 +32,14 @@ async function BlogPost({ params }) {
         publishedOn={frontmatter.publishedOn}
       />
       <div className={styles.page}>
-        <MDXRemote source={content} components={{ pre: CodeSnippet }} />
+        <MDXRemote
+          source={content}
+          components={{
+            pre: CodeSnippet,
+            DivisionGroupsDemo: DivisionGroupsDemo,
+            CircularColorsDemo: CircularColorsDemo,
+          }}
+        />
       </div>
     </article>
   );
