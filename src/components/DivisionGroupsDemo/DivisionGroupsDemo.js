@@ -67,7 +67,7 @@ function DivisionGroupsDemo({
                     return (
                       <motion.div
                         key={layoutId}
-                        layout={layoutId}
+                        layoutId={layoutId}
                         className={styles.item}
                       />
                     );
@@ -89,7 +89,7 @@ function DivisionGroupsDemo({
                 return (
                   <motion.div
                     key={layoutId}
-                    layout={layoutId}
+                    layoutId={layoutId}
                     className={styles.item}
                   />
                 );
