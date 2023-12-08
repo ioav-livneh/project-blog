@@ -1,20 +1,25 @@
 import React from "react";
-
-import BlogHero from "@/components/BlogHero";
-
-import styles from "./postSlug.module.css";
-
-import { loadBlogPost } from "../../helpers/file-helpers";
-
+import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
 
 import { BLOG_TITLE } from "@/constants";
+import { loadBlogPost } from "../../helpers/file-helpers";
+
+import BlogHero from "@/components/BlogHero";
+import styles from "./postSlug.module.css";
+
 import CodeSnippet from "@/components/CodeSnippet/CodeSnippet";
 import DivisionGroupsDemo from "@/components/DivisionGroupsDemo/DivisionGroupsDemo";
 import CircularColorsDemo from "@/components/CircularColorsDemo/CircularColorsDemo";
 
 export async function generateMetadata({ params }) {
-  const { frontmatter } = await loadBlogPost(params.postSlug);
+  const blogPostData = await loadBlogPost(params.postSlug);
+
+  if (!blogPostData) {
+    notFound();
+  }
+
+  const { frontmatter } = blogPostData;
 
   return {
     title: `${frontmatter.title} • ${BLOG_TITLE}`,
@@ -23,7 +28,12 @@ export async function generateMetadata({ params }) {
 }
 
 async function BlogPost({ params }) {
-  const { frontmatter, content } = await loadBlogPost(params.postSlug);
+  const blogPostData = await loadBlogPost(params.postSlug);
+  if (!blogPostData) {
+    notFound();
+  }
+
+  const { frontmatter, content } = blogPostData;
 
   return (
     <article className={styles.wrapper}>
